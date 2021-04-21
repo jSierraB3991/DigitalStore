@@ -1,0 +1,13 @@
+server:
+  port: 20001
+spring:
+  datasource:
+    username: ${DATA_BASE_USER_NAME:postgres}
+    password: ${DATA_BASE_PASSWORD:root}
+    url: jdbc:postgresql://${SERVER:localhost}:${PORT:5432}/${DATA_BASE:digital-store-service-product}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
