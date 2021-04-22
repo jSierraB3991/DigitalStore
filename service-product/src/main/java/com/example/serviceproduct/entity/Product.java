@@ -1,6 +1,10 @@
 package com.example.serviceproduct.entity;
 
 import com.example.serviceproduct.enums.Status;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +20,10 @@ import java.util.UUID;
 
 @Table(name = "product")
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Product {
 
     @Id

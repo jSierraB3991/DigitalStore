@@ -1,4 +1,6 @@
 package com.example.serviceproduct.enums;
 
-public class Status {
+public enum Status {
+    ACTIVE,
+    INACTIVE
 }
