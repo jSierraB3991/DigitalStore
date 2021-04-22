@@ -1,0 +1,28 @@
+app:
+  description: ${app.name} is a Spring Boot application
+  name: customer_service
+server:
+  port: 20002
+spring:
+  datasource:
+    username: ${DATA_BASE_USER_NAME:postgres}
+    password: ${DATA_BASE_PASSWORD:root}
+    url: jdbc:postgresql://${SERVER:localhost}:${PORT:5432}/${DATA_BASE:digital-store-customer-service}
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        globally_quoted_identifiers: true
+        format_sql: true
+        jdbc:
+          time_zone: ${TIME_ZONE:UTC}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+    loggers:
+      enabled: true
