@@ -48,7 +48,8 @@ public class ProductRepositoryMockTest {
                 .build();
 
         productRepository.save(product);
+        actual++;
         var list = productRepository.findByCategory(category);
-        Assertions.assertEquals(list.size(), actual + 1);
+        Assertions.assertEquals(list.size(), actual);
     }
 }

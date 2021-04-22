@@ -1,3 +1,6 @@
+app:
+  description: ${app.name} is a Spring Boot application
+  name: marketing_segments
 server:
   port: 20001
 spring:
@@ -6,8 +9,20 @@ spring:
     password: ${DATA_BASE_PASSWORD:root}
     url: jdbc:postgresql://${SERVER:localhost}:${PORT:5432}/${DATA_BASE:digital-store-service-product}
   jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    generate-ddl: true
     hibernate:
       ddl-auto: update
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+        globally_quoted_identifiers: true
+        format_sql: true
+        jdbc:
+          time_zone: ${TIME_ZONE:UTC}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+    loggers:
+      enabled: true
