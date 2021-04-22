@@ -37,7 +37,9 @@ public class Product {
 
     @NotEmpty(message = "The field name is required")
     private String name;
+
     private String description;
+
     @Positive(message = "The field stock is not lower to Zero")
     private Double stock;
     private Double price;
