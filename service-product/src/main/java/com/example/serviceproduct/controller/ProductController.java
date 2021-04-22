@@ -29,79 +29,79 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    public ResponseEntity<List<Product>> findAll(){
+    public ResponseEntity<List<Product>> findAll() {
         var list = productService.findAll();
-        if(list.isEmpty()) {
+        if (list.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(list);
     }
 
     @GetMapping("/page")
-    public ResponseEntity<Page<Product>> findAllPageable(Pageable pageable){
+    public ResponseEntity<Page<Product>> findAllPageable(Pageable pageable) {
         var list = productService.findAllPageable(pageable);
-        if(list.isEmpty()) {
+        if (list.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(list);
     }
 
     @GetMapping("/category/{uuid-category}")
-    public ResponseEntity<List<Product>> findAllByCategory(@PathVariable("uuid-category") UUID category){
+    public ResponseEntity<List<Product>> findAllByCategory(@PathVariable("uuid-category") UUID category) {
         var list = productService.findByCategory(category);
-        if(list.isEmpty()) {
+        if (list.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(list);
     }
 
     @GetMapping("/{uuid-product}")
-    public ResponseEntity<Product> findById(@PathVariable("uuid-product") UUID product){
+    public ResponseEntity<Product> findById(@PathVariable("uuid-product") UUID product) {
         try {
             var productSave = productService.findById(product);
             return ResponseEntity.ok(productSave);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             return ResponseEntity.notFound().build();
         }
     }
 
     @PostMapping
-     public ResponseEntity<Product> save(@Valid @RequestBody Product product){
+    public ResponseEntity<Product> save(@Valid @RequestBody Product product) {
         try {
             var productSave = productService.save(product);
             return ResponseEntity.status(HttpStatus.CREATED).body(productSave);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             return ResponseEntity.badRequest().build();
         }
-     }
+    }
 
     @PutMapping("/{uuid-product}")
     public ResponseEntity<Product> update(@PathVariable("uuid-product") UUID productUuid,
-                                          @Valid @RequestBody Product product){
+                                          @Valid @RequestBody Product product) {
         try {
-            var productSave = productService.update(productUuid,product);
+            var productSave = productService.update(productUuid, product);
             return ResponseEntity.ok().body(productSave);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             return ResponseEntity.badRequest().build();
         }
     }
 
     @DeleteMapping("/{uuid-product}")
-    public ResponseEntity delete(@PathVariable("uuid-product") UUID productUuid){
+    public ResponseEntity delete(@PathVariable("uuid-product") UUID productUuid) {
         try {
             productService.delete(productUuid);
             return ResponseEntity.ok().build();
-        }catch (Exception ex){
+        } catch (Exception ex) {
             return ResponseEntity.badRequest().build();
         }
     }
 
     @PutMapping
-    public ResponseEntity<Product> updateStock(@RequestBody ProductUpdateStock productUpdateStock){
+    public ResponseEntity<Product> updateStock(@RequestBody ProductUpdateStock productUpdateStock) {
         try {
             var product = productService.updateStock(productUpdateStock.getUuid(), productUpdateStock.getStock());
             return ResponseEntity.ok().body(product);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             return ResponseEntity.badRequest().build();
         }
     }

@@ -13,12 +13,12 @@ import static com.example.serviceproduct.enums.Status.CREATED;
 
 public class ProductFactory {
 
-    public static Category getCategory(){
+    public static Category getCategory() {
         var faker = new Faker();
         return Category.builder().id(UUID.randomUUID()).name(faker.pokemon().name()).build();
     }
 
-    public static Product getProduct(Category category){
+    public static Product getProduct(Category category) {
         var faker = new Faker();
         return Product.builder()
                 .id(UUID.randomUUID())

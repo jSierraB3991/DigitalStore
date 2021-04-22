@@ -28,13 +28,13 @@ public class ProductServiceMockTest {
     private ProductService productService;
 
     @BeforeEach
-    void setup(){
+    void setup() {
         MockitoAnnotations.openMocks(this);
         productService = new ProductServiceImpl(productRepository, categoryRepository);
     }
 
     @Test
-    void whenValidGetId_thenReturnProduct(){
+    void whenValidGetId_thenReturnProduct() {
         var product = ProductFactory.getProduct(ProductFactory.getCategory());
         Mockito.when(productRepository.findById(any()))
                 .thenReturn(Optional.of(product));

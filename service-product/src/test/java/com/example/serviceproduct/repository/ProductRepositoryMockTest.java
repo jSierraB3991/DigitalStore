@@ -31,7 +31,7 @@ public class ProductRepositoryMockTest {
     }
 
     @Test
-    void whenFindByCategory_thenReturnListProduct(){
+    void whenFindByCategory_thenReturnListProduct() {
         Data();
         var category = categoryRepository.findAll().get(0);
         var actual = productRepository.findByCategory(category).size();

@@ -11,13 +11,18 @@ import java.util.UUID;
 public interface ProductService {
 
     Page<Product> findAllPageable(Pageable pageable);
+
     List<Product> findAll();
+
     Product findById(UUID uuid);
 
     Product save(Product product);
+
     Product update(UUID uuid, Product product);
+
     void delete(UUID uuid);
 
     List<Product> findByCategory(UUID category);
+
     Product updateStock(UUID uuid, Double quantity);
 }

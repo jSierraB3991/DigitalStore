@@ -9,10 +9,14 @@ import java.util.UUID;
 
 public interface CategoryService {
     Page<Category> findAllPageable(Pageable pageable);
+
     List<Category> findAll();
+
     Category findById(UUID uuid);
 
     Category save(Category category);
+
     Category update(UUID uuid, Category category);
+
     void delete(UUID uuid);
 }

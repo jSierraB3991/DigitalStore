@@ -21,20 +21,20 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<List<Category>> findALl(){
+    public ResponseEntity<List<Category>> findALl() {
         var categories = categoryService.findAll();
-        if(categories.isEmpty()){
+        if (categories.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(categories);
     }
 
     @PostMapping
-    public ResponseEntity<Category> save(@Valid @RequestBody Category category){
+    public ResponseEntity<Category> save(@Valid @RequestBody Category category) {
         try {
             var categorySave = categoryService.save(category);
             return ResponseEntity.ok(categorySave);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             return ResponseEntity.badRequest().build();
         }
     }
