@@ -1,6 +1,7 @@
 package com.example.serviceproduct.service;
 
 import com.example.serviceproduct.help.factory.ProductFactory;
+import com.example.serviceproduct.repository.CategoryRepository;
 import com.example.serviceproduct.repository.ProductRepository;
 import com.example.serviceproduct.service.impl.ProductServiceImpl;
 import org.junit.jupiter.api.Assertions;
@@ -21,13 +22,15 @@ public class ProductServiceMockTest {
 
     @Mock
     private ProductRepository productRepository;
+    @Mock
+    private CategoryRepository categoryRepository;
 
     private ProductService productService;
 
     @BeforeEach
     void setup(){
         MockitoAnnotations.openMocks(this);
-        productService = new ProductServiceImpl(productRepository);
+        productService = new ProductServiceImpl(productRepository, categoryRepository);
     }
 
     @Test

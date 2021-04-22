@@ -1,7 +1,7 @@
 package com.example.serviceproduct.service.impl;
 
-import com.example.serviceproduct.entity.Category;
 import com.example.serviceproduct.entity.Product;
+import com.example.serviceproduct.repository.CategoryRepository;
 import com.example.serviceproduct.repository.ProductRepository;
 import com.example.serviceproduct.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +19,7 @@ import static com.example.serviceproduct.enums.Status.DELETE;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
 
     @Override
     public Page<Product> findAllPageable(Pageable pageable) {
@@ -32,7 +33,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product findById(UUID uuid) {
-        return productRepository.findById(uuid).orElseThrow();//() -> new RuntimeException("Not Found Id"));
+        return productRepository.findById(uuid).orElseThrow();
     }
 
     @Override
@@ -59,8 +60,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> findByCategory(Category category) {
-        return productRepository.findByCategory(category);
+    public List<Product> findByCategory(UUID category) {
+        return productRepository.findByCategory(categoryRepository.findById(category).orElseThrow());
     }
 
     @Override

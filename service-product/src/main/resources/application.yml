@@ -1,6 +1,6 @@
 app:
   description: ${app.name} is a Spring Boot application
-  name: marketing_segments
+  name: product_service
 server:
   port: 20001
 spring:

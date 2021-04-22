@@ -18,6 +18,6 @@ public interface ProductService {
     Product update(UUID uuid, Product product);
     void delete(UUID uuid);
 
-    List<Product> findByCategory(Category category);
+    List<Product> findByCategory(UUID category);
     Product updateStock(UUID uuid, Double quantity);
 }
