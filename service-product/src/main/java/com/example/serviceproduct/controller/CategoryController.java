@@ -1,6 +1,7 @@
 package com.example.serviceproduct.controller;
 
-import com.example.serviceproduct.entity.Category;
+import com.example.serviceproduct.dto.CategoryDto;
+import com.example.serviceproduct.mappers.CategoryMapper;
 import com.example.serviceproduct.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,21 +20,22 @@ import java.util.List;
 public class CategoryController {
 
     private final CategoryService categoryService;
+    private final CategoryMapper categoryMapper;
 
     @GetMapping
-    public ResponseEntity<List<Category>> findALl() {
+    public ResponseEntity<List<CategoryDto>> findALl() {
         var categories = categoryService.findAll();
         if (categories.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok(categories);
+        return ResponseEntity.ok(categoryMapper.getDto(categories));
     }
 
     @PostMapping
-    public ResponseEntity<Category> save(@Valid @RequestBody Category category) {
+    public ResponseEntity<CategoryDto> save(@Valid @RequestBody CategoryDto category) {
         try {
-            var categorySave = categoryService.save(category);
-            return ResponseEntity.ok(categorySave);
+            var categorySave = categoryService.save(categoryMapper.getEntity(category));
+            return ResponseEntity.ok(categoryMapper.getDto(categorySave));
         } catch (Exception ex) {
             return ResponseEntity.badRequest().build();
         }

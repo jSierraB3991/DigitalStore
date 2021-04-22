@@ -1,4 +1,4 @@
-package com.example.serviceproduct;
+package com.example.serviceproduct.exception;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;

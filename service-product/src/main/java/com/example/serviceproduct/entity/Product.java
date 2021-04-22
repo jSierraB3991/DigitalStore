@@ -1,7 +1,6 @@
 package com.example.serviceproduct.entity;
 
 import com.example.serviceproduct.enums.Status;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,9 +16,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -33,14 +29,12 @@ import java.util.UUID;
 public class Product {
 
     @Id
-    private UUID id = UUID.randomUUID();
+    private UUID id;
 
-    @NotEmpty(message = "The field name is required")
     private String name;
 
     private String description;
 
-    @Positive(message = "The field stock is not lower to Zero")
     private Double stock;
     private Double price;
 
@@ -48,11 +42,9 @@ public class Product {
     private Status status;
 
     @Column(name = "create_at")
-    private LocalDate createAt = LocalDate.now();
+    private LocalDate createAt;
 
-    @NotNull(message = "The field category is not null")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Category category;
 }

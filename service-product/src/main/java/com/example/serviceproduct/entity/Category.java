@@ -9,7 +9,6 @@ import lombok.ToString;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
 import java.util.UUID;
 
 @Data
@@ -21,8 +20,7 @@ import java.util.UUID;
 @ToString
 public class Category {
     @Id
-    private UUID id = UUID.randomUUID();
+    private UUID id;
 
-    @NotEmpty(message = "The field name is required")
     private String name;
 }

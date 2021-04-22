@@ -4,8 +4,6 @@ import com.example.serviceproduct.entity.Category;
 import com.example.serviceproduct.repository.CategoryRepository;
 import com.example.serviceproduct.service.CategoryService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -16,11 +14,6 @@ import java.util.UUID;
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
-
-    @Override
-    public Page<Category> findAllPageable(Pageable pageable) {
-        return categoryRepository.findAll(pageable);
-    }
 
     @Override
     public List<Category> findAll() {

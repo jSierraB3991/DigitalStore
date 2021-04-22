@@ -1,7 +1,8 @@
 package com.example.serviceproduct.controller;
 
+import com.example.serviceproduct.dto.ProductDto;
 import com.example.serviceproduct.dto.ProductUpdateStock;
-import com.example.serviceproduct.entity.Product;
+import com.example.serviceproduct.mappers.ProductMapper;
 import com.example.serviceproduct.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -27,60 +28,61 @@ import java.util.UUID;
 public class ProductController {
 
     private final ProductService productService;
+    private final ProductMapper productMapper;
 
     @GetMapping
-    public ResponseEntity<List<Product>> findAll() {
+    public ResponseEntity<List<ProductDto>> findAll() {
         var list = productService.findAll();
         if (list.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok(list);
+        return ResponseEntity.ok(productMapper.getDto(list));
     }
 
     @GetMapping("/page")
-    public ResponseEntity<Page<Product>> findAllPageable(Pageable pageable) {
+    public ResponseEntity<Page<ProductDto>> findAllPageable(Pageable pageable) {
         var list = productService.findAllPageable(pageable);
         if (list.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok(list);
+        return ResponseEntity.ok(list.map(productMapper::getDto));
     }
 
     @GetMapping("/category/{uuid-category}")
-    public ResponseEntity<List<Product>> findAllByCategory(@PathVariable("uuid-category") UUID category) {
+    public ResponseEntity<List<ProductDto>> findAllByCategory(@PathVariable("uuid-category") UUID category) {
         var list = productService.findByCategory(category);
         if (list.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok(list);
+        return ResponseEntity.ok(productMapper.getDto(list));
     }
 
     @GetMapping("/{uuid-product}")
-    public ResponseEntity<Product> findById(@PathVariable("uuid-product") UUID product) {
+    public ResponseEntity<ProductDto> findById(@PathVariable("uuid-product") UUID product) {
         try {
             var productSave = productService.findById(product);
-            return ResponseEntity.ok(productSave);
+            return ResponseEntity.ok(productMapper.getDto(productSave));
         } catch (Exception ex) {
             return ResponseEntity.notFound().build();
         }
     }
 
     @PostMapping
-    public ResponseEntity<Product> save(@Valid @RequestBody Product product) {
+    public ResponseEntity<ProductDto> save(@Valid @RequestBody ProductDto product) {
         try {
-            var productSave = productService.save(product);
-            return ResponseEntity.status(HttpStatus.CREATED).body(productSave);
+            var productSave = productService.save(productMapper.getEntity(product));
+            return ResponseEntity.status(HttpStatus.CREATED).body(productMapper.getDto(productSave));
         } catch (Exception ex) {
             return ResponseEntity.badRequest().build();
         }
     }
 
     @PutMapping("/{uuid-product}")
-    public ResponseEntity<Product> update(@PathVariable("uuid-product") UUID productUuid,
-                                          @Valid @RequestBody Product product) {
+    public ResponseEntity<ProductDto> update(@PathVariable("uuid-product") UUID productUuid,
+                                             @Valid @RequestBody ProductDto product) {
         try {
-            var productSave = productService.update(productUuid, product);
-            return ResponseEntity.ok().body(productSave);
+            var productSave = productService.update(productUuid, productMapper.getEntity(product));
+            return ResponseEntity.ok().body(productMapper.getDto(productSave));
         } catch (Exception ex) {
             return ResponseEntity.badRequest().build();
         }
@@ -97,10 +99,10 @@ public class ProductController {
     }
 
     @PutMapping
-    public ResponseEntity<Product> updateStock(@RequestBody ProductUpdateStock productUpdateStock) {
+    public ResponseEntity<ProductDto> updateStock(@RequestBody ProductUpdateStock productUpdateStock) {
         try {
             var product = productService.updateStock(productUpdateStock.getUuid(), productUpdateStock.getStock());
-            return ResponseEntity.ok().body(product);
+            return ResponseEntity.ok().body(productMapper.getDto(product));
         } catch (Exception ex) {
             return ResponseEntity.badRequest().build();
         }
